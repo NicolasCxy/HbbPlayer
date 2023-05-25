@@ -15,24 +15,33 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
 
     private ArrayList<User> testList = new ArrayList<>();
-    private HashMap<String,User> testMap = new HashMap<>();
+    private HashMap<String, User> testMap = new HashMap<>();
 
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-        User user = new User();
-        testList.add(user);
-        testMap.put("1",user);
-        System.out.println("listStr: " + testList.toString());
-        System.out.println("MapStr: " + testMap.toString());
-        System.out.println("-----------------------------------------------------------------");
+//        assertEquals(4, 2 + 2);
 
-        User user1 = testMap.get("1");
-        user1.setName("wwwwwwwwwwwwwww");
-        user1.setAge(999);
+//        int a = 3601;
+//        int b = a - 5;
+//        System.out.println("-------------------------value:" + (3720 % 3600) + " ----------------------------------------");
 
-        System.out.println("listStrAfter: " + testList.toString());
-        System.out.println("MapStrAfter: " + testMap.toString());
+        String test1 = "2001837598";
+        String test2 = "2001837598_2";
+
+        System.out.println("-------------------------value11:" + test2.contains(test1)+ " ----------------------------------------");
+//        User user = new User();
+//        testList.add(user);
+//        testMap.put("1", user);
+//        System.out.println("listStr: " + testList.toString());
+//        System.out.println("MapStr: " + testMap.toString());
+//        System.out.println("-----------------------------------------------------------------");
+//
+//        User user1 = testMap.get("1");
+//        user1.setName("wwwwwwwwwwwwwww");
+//        user1.setAge(999);
+//
+//        System.out.println("listStrAfter: " + testList.toString());
+//        System.out.println("MapStrAfter: " + testMap.toString());
 
     }
 

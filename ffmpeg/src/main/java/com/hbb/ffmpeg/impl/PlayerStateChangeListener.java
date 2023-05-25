@@ -5,4 +5,11 @@ package com.hbb.ffmpeg.impl;
  */
 public interface PlayerStateChangeListener {
     void onBeReady();   //准备好了
+
+    void onCurrentTime(int currentTime,int totalTime);
+
+    void onComplete();
+
+    void onStop(); //停止播放
+
 }

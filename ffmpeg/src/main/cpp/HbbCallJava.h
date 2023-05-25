@@ -23,6 +23,9 @@ public:
     jmethodID jmid_parpared;
     jmethodID jmid_timeinfo;
     jmethodID jmid_renderyuv;
+    jmethodID jmid_playcompleted;
+    jmethodID jmid_playstop;
+
 public:
     HbbCallJava(_JavaVM *javaVM, JNIEnv *env, jobject *obj);
 
@@ -33,6 +36,10 @@ public:
     void onCallTimeInfo(int type, int curr, int total);
 
     void onCallRenderYUV(int width, int height, uint8_t *fy, uint8_t *fu, uint8_t *fv);
+
+    void onCallPlayCompleted(int type);
+
+    void onCallPlayStop(int type);
 };
 
 

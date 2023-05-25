@@ -40,12 +40,13 @@ Java_com_hbb_ffmpeg_palyer_HbbPlayer_n_1prepare(JNIEnv *env, jobject thiz, jstri
 
     const char *path = env->GetStringUTFChars(path_, 0);
 
-    if(ffControl == nullptr){
+    if (ffControl == nullptr) {
         callJava = new HbbCallJava(javaVM, env, &thiz);
         playStatus = new Playstatus();
-        ffControl = new FFmpegControl(callJava, playStatus, path);
+        ffControl = new FFmpegControl(callJava, playStatus);
     }
 
+    ffControl->setUrl(path);
     ffControl->prepare();
 //    env->ReleaseStringUTFChars(path_,path);
 
@@ -59,7 +60,57 @@ Java_com_hbb_ffmpeg_palyer_HbbPlayer_n_1start(JNIEnv *env, jobject thiz) {
      * 3、解码渲染
      */
 
-    if(ffControl != nullptr){
+    if (ffControl != nullptr) {
+        LOGD("ffControl Start!");
         ffControl->start();
+    } else {
+        LOGE("ffControl is Null!!");
+    }
+}
+extern "C" JNIEXPORT void JNICALL
+Java_com_hbb_ffmpeg_palyer_HbbPlayer_n_1seek(JNIEnv *env, jobject thiz, jint second) {
+    /**
+     * 1、校验长度、判断seek值合不合理
+     * 2、暂停数据读取和解码，调用av_seek 进行seek 到指定位置
+     * 3、清空队列，刷新编解码缓冲区
+     */
+    if (ffControl != nullptr) {
+        ffControl->seek(second);
+    }
+
+
+}
+extern "C" JNIEXPORT void JNICALL
+Java_com_hbb_ffmpeg_palyer_HbbPlayer_n_1stop(JNIEnv *env, jobject thiz) {
+    //释放资源
+    if (ffControl != nullptr) {
+        ffControl->stop();
+        delete ffControl;
+        ffControl = nullptr;
+    }
+
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_hbb_ffmpeg_palyer_HbbPlayer_n_1pause(JNIEnv *env, jobject thiz) {
+    //暂停
+    if (ffControl != nullptr) {
+        ffControl->pause();
+    }
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_hbb_ffmpeg_palyer_HbbPlayer_n_1resume(JNIEnv *env, jobject thiz) {
+    //恢复播放
+    if (ffControl != nullptr) {
+        ffControl->resume();
+    }
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_hbb_ffmpeg_palyer_HbbPlayer_n_1speed(JNIEnv *env, jobject thiz, jfloat speed) {
+    //倍速
+    if (ffControl != nullptr) {
+        ffControl->speed(speed);
     }
 }

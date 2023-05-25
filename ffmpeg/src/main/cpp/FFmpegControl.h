@@ -10,6 +10,8 @@
 #include "Playstatus.h"
 #include "pthread.h"
 #include "HbbVideo.h"
+#include "HbbAudio.h"
+#include <chrono>
 
 extern "C"
 {
@@ -17,6 +19,7 @@ extern "C"
 #include "libavformat/avformat.h"
 }
 
+using namespace std::chrono;
 
 class FFmpegControl {
 public:
@@ -25,8 +28,13 @@ public:
     Playstatus *playStatus = NULL;
     const char *url = NULL;
     HbbVideo *mVideo = NULL;
+    HbbAudio *mAudio = NULL;
     //ffmpeg
     AVFormatContext *pFormatCtx = NULL;
+
+    int duration = 0;
+
+    bool actionStop = false;
 
     //锁
     pthread_t initThread;
@@ -35,7 +43,7 @@ public:
 
 
 public:
-    FFmpegControl(HbbCallJava *callJava, Playstatus *playStatus, const char *url);
+    FFmpegControl(HbbCallJava *callJava, Playstatus *playStatus);
 
     ~FFmpegControl();
 
@@ -44,6 +52,22 @@ public:
     void initFFmpegMode();
 
     void start();
+
+    void seek(int64_t second);
+
+    void pause();
+
+    void resume();
+
+    void stop();
+
+    void setUrl(const char *url);
+
+    void speed(float speed);
+
+    void release();
+
+    void releaseResources();
 
     void getCodecContext(AVCodecParameters *pParameters, AVCodecContext **pContext);
 

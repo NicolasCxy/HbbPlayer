@@ -16,7 +16,6 @@ HbbQueue::~HbbQueue() {
 
 int HbbQueue::putAvpacket(AVPacket *packet) {
     pthread_mutex_lock(&mutexPacket);
-
     queuePacket.push(packet);
     pthread_cond_signal(&condPacket);
     pthread_mutex_unlock(&mutexPacket);
@@ -40,6 +39,7 @@ int HbbQueue::getAvpacket(AVPacket *packet) {
             pthread_cond_wait(&condPacket, &mutexPacket);
         }
     }
+
     pthread_mutex_unlock(&mutexPacket);
     return 0;
 }
